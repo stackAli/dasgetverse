@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doraemon GadgetVerse — Episodes</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #00b4d8;
+  --blue2: #0096c7;
+  --blue3: #0077b6;
+  --yellow: #ffd60a;
+  --bg: #050a14;
+  --card-bg: #0d1726;
+  --surface: #111d2e;
+  --muted: #8899aa;
+  --text: #e8f4fd;
+  --white: #ffffff;
+  --radius: 8px;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── SPLASH SCREEN ── */
+#splash {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #000;
+  display: flex; align-items: center; justify-content: center;
+  animation: splashFade 0.6s ease 2.8s forwards;
+}
+@keyframes splashFade { to { opacity: 0; pointer-events: none; } }
+
+.splash-logo {
+  font-family: var(--font-display);
+  font-size: clamp(90px, 20vw, 180px);
+  letter-spacing: -4px;
+  color: var(--blue);
+  position: relative;
+  animation: splashScale 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  text-shadow:
+    0 0 60px rgba(0,180,216,0.8),
+    0 0 120px rgba(0,180,216,0.5),
+    0 0 200px rgba(0,150,199,0.3);
+}
+@keyframes splashScale {
+  0%   { transform: scale(3); opacity: 0; filter: blur(20px); }
+  40%  { transform: scale(1.02); opacity: 1; filter: blur(0); }
+  80%  { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.9; }
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; gap: 24px;
+  padding: 0 4%;
+  height: 68px;
+  background: linear-gradient(to bottom, rgba(5,10,20,0.98) 0%, transparent 100%);
+  transition: background 0.3s;
+}
+.navbar.scrolled { background: rgba(5,10,20,0.97); }
+
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--blue);
+  letter-spacing: 1px;
+  text-shadow: 0 0 20px rgba(0,180,216,0.6);
+  flex-shrink: 0;
+}
+.brand-d {
+  width: 36px; height: 36px;
+  background: var(--blue);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-family: var(--font-display);
+  color: #000; font-weight: 900;
+  box-shadow: 0 0 20px rgba(0,180,216,0.7);
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: 4px;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #ccc;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a.active { color: var(--white); }
+
+.nav-right {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 16px;
+}
+.nav-search-icon {
+  cursor: pointer; color: #ccc; font-size: 18px;
+  transition: color 0.2s;
+}
+.nav-search-icon:hover { color: var(--white); }
+
+.menu-btn {
+  display: none;
+  background: none; border: none;
+  color: var(--white); font-size: 22px;
+  cursor: pointer; margin-left: auto;
+}
+
+/* ── HERO ── */
+.hero {
+  margin-top: 30px;
+  position: relative;
+  height: 90vh; min-height: 560px;
+  display: flex; align-items: flex-end;
+  padding: 0 4% 8%;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    135deg,
+    #001a33 0%, #003366 30%, #005b9e 60%, #0096c7 100%
+  );
+  overflow: hidden;
+}
+
+/* Doraemon silhouette glow */
+.hero-bg::before {
+  content: '';
+  position: absolute; right: -5%; bottom: -5%;
+  width: 65%; height: 100%;
+  background: radial-gradient(ellipse at center, rgba(0,180,216,0.15) 0%, transparent 70%);
+}
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(5,10,20,0.95) 0%,
+    rgba(5,10,20,0.7) 45%,
+    rgba(5,10,20,0.1) 100%
+  );
+}
+
+.hero-doraemon {
+  position: absolute;
+  right: 3%;
+  bottom: 0;
+  height: 88%;
+  opacity: 0.92;
+  filter: drop-shadow(0 0 60px rgba(0,150,199,0.5));
+  animation: doraSway 6s ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes doraSway {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+
+.hero-particles {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+}
+.hero-particles span {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: var(--blue);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particle var(--dur, 4s) var(--delay, 0s) infinite ease-in-out;
+}
+@keyframes particle {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.3; }
+  100% { transform: translateY(-20vh) translateX(var(--drift, 30px)); opacity: 0; }
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 560px;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,180,216,0.15);
+  border: 1px solid rgba(0,180,216,0.4);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px; font-weight: 800;
+  color: var(--blue);
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 16px;
+  animation: fadeUp 0.8s 3.2s both;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 8vw, 96px);
+  line-height: 0.95;
+  color: var(--white);
+  text-shadow: 0 4px 30px rgba(0,0,0,0.8);
+  margin-bottom: 16px;
+  animation: fadeUp 0.8s 3.3s both;
+}
+.hero-title em {
+  font-style: normal;
+  color: var(--blue);
+  text-shadow: 0 0 40px rgba(0,180,216,0.8);
+}
+
+.hero-desc {
+  color: #b0c4d8;
+  font-size: 15px; line-height: 1.65;
+  margin-bottom: 28px;
+  max-width: 460px;
+  animation: fadeUp 0.8s 3.4s both;
+}
+
+.hero-buttons {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  animation: fadeUp 0.8s 3.5s both;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 26px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-weight: 800; font-size: 15px;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+  text-decoration: none;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-play {
+  background: var(--white);
+  color: #000;
+}
+.btn-play:hover { filter: brightness(0.9); }
+.btn-info {
+  background: rgba(255,255,255,0.18);
+  color: var(--white);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.btn-info:hover { background: rgba(255,255,255,0.28); }
+.btn-primary {
+  background: var(--blue);
+  color: #000;
+  font-weight: 900;
+}
+.btn-primary:hover { box-shadow: 0 6px 24px rgba(0,180,216,0.5); }
+.btn-ghost {
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.2); }
+.btn-danger { background: #e53935; color: #fff; }
+.btn-danger:hover { background: #c62828; }
+.btn-sm { padding: 8px 16px; font-size: 13px; }
+
+.hero-meta {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-top: 20px;
+  animation: fadeUp 0.8s 3.6s both;
+}
+.meta-tag {
+  font-size: 12px; font-weight: 700;
+  color: var(--muted);
+  display: flex; align-items: center; gap: 4px;
+}
+.meta-tag span { color: var(--blue); }
+
+.hero-fade {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+  background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+  z-index: 1;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── STICKY TOOLBAR ── */
+.toolbar {
+  position: sticky; top: 68px; z-index: 50;
+  background: rgba(5,10,20,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,180,216,0.12);
+  padding: 0 4%;
+}
+
+.toolbar-inner {
+  display: flex; align-items: center; gap: 12px;
+  height: 56px; overflow-x: auto;
+  scrollbar-width: none;
+}
+.toolbar-inner::-webkit-scrollbar { display: none; }
+
+.filter-btn {
+  flex-shrink: 0;
+  background: none; border: none;
+  color: #8899aa;
+  font-family: var(--font-body);
+  font-weight: 800; font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.filter-btn:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+.filter-btn.active {
+  color: #000;
+  background: var(--blue);
+}
+
+.toolbar-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+
+.search-wrap {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
+}
+.search-input {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  padding: 7px 14px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 700;
+  outline: none;
+  width: 200px;
+  transition: border-color 0.2s, width 0.3s;
+}
+.search-input:focus {
+  border-color: var(--blue);
+  width: 260px;
+}
+.search-input::placeholder { color: var(--muted); }
+
+/* ── CONTENT AREA ── */
+.content { padding: 0 4% 80px; }
+
+/* ── ROW SECTION ── */
+.row-section { margin: 48px 0; }
+
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: 24px; letter-spacing: 1px;
+  color: var(--white);
+}
+.section-count {
+  font-size: 12px; font-weight: 800;
+  color: var(--blue);
+  background: rgba(0,180,216,0.12);
+  border: 1px solid rgba(0,180,216,0.25);
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+.see-all {
+  margin-left: auto;
+  background: none; border: none;
+  color: var(--blue);
+  font-family: var(--font-body);
+  font-weight: 800; font-size: 12px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 4px;
+  transition: gap 0.2s;
+}
+.see-all:hover { gap: 8px; }
+
+/* ── CARD ROW (Netflix scroll) ── */
+.card-row-wrap { position: relative; }
+.card-row {
+  display: flex; gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.card-row::-webkit-scrollbar { display: none; }
+
+.row-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 80px;
+  background: rgba(5,10,20,0.85);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  color: var(--white); font-size: 20px;
+  cursor: pointer;
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 5;
+  transition: background 0.2s;
+}
+.card-row-wrap:hover .row-arrow { display: flex; }
+.row-arrow:hover { background: rgba(5,10,20,0.97); }
+.row-arrow.left { left: -24px; }
+.row-arrow.right { right: -24px; }
+
+/* ── GRID (filtered view) ── */
+.eps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+/* ── CARD ── */
+.ep-card {
+  flex-shrink: 0;
+  width: 200px;
+  scroll-snap-align: start;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card-bg);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.2,0,0,1), box-shadow 0.25s, z-index 0s 0.25s;
+  transform-origin: center center;
+}
+.card-row .ep-card:first-child { transform-origin: left center; }
+.card-row .ep-card:last-child { transform-origin: right center; }
+
+.ep-card:hover {
+  transform: scale(1.18) translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,180,216,0.3);
+  z-index: 10;
+  transition: transform 0.25s cubic-bezier(0.2,0,0,1), box-shadow 0.25s, z-index 0s;
+}
+
+.card-thumb {
+  width: 100%; aspect-ratio: 16/9;
+  position: relative; overflow: hidden;
+  background: var(--surface);
+}
+.card-thumb img, .card-thumb video {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s;
+}
+.ep-card:hover .card-thumb img,
+.ep-card:hover .card-thumb video { transform: scale(1.06); }
+
+.thumb-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 6px;
+  background: linear-gradient(135deg, #0a1a2e, #0d2644);
+  color: var(--muted); font-size: 12px; font-weight: 700;
+}
+.thumb-placeholder .tp-icon { font-size: 28px; }
+
+.card-rating-bar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: rgba(255,255,255,0.1);
+}
+.card-rating-fill { height: 100%; background: var(--blue); }
+
+/* Hover overlay */
+.card-hover-info {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(5,10,20,0.98) 0%, transparent 100%);
+  padding: 20px 12px 12px;
+  transform: translateY(100%);
+  transition: transform 0.25s;
+  pointer-events: none;
+}
+.ep-card:hover .card-hover-info { transform: translateY(0); pointer-events: all; }
+
+.hover-actions {
+  display: flex; gap: 6px; margin-bottom: 8px;
+}
+.ha-btn {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.1);
+  color: var(--white); font-size: 13px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  pointer-events: all;
+}
+.ha-btn.play { background: var(--white); color: #000; border-color: var(--white); font-size: 14px; }
+.ha-btn:hover { transform: scale(1.1); background: rgba(255,255,255,0.2); }
+.ha-btn.play:hover { background: #ddd; }
+
+.hover-title {
+  font-weight: 900; font-size: 13px;
+  color: var(--white); margin-bottom: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.hover-meta {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+}
+.cat-badge {
+  font-size: 10px; font-weight: 800;
+  padding: 2px 7px; border-radius: 3px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.cat-Adventure { background: rgba(0,180,216,0.3); color: #00e5ff; border: 1px solid rgba(0,180,216,0.4); }
+.cat-Comedy { background: rgba(255,214,10,0.2); color: #ffd60a; border: 1px solid rgba(255,214,10,0.3); }
+.cat-Lesson { background: rgba(76,175,80,0.2); color: #69f0ae; border: 1px solid rgba(76,175,80,0.3); }
+.cat-Classic { background: rgba(156,39,176,0.2); color: #ea80fc; border: 1px solid rgba(156,39,176,0.3); }
+.cat-Gadget { background: rgba(255,87,34,0.2); color: #ff9e80; border: 1px solid rgba(255,87,34,0.3); }
+.stars-mini { font-size: 10px; color: var(--yellow); }
+
+.card-body {
+  padding: 10px 10px 12px;
+}
+.card-title {
+  font-weight: 800; font-size: 13px;
+  color: var(--white);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+.card-sub {
+  font-size: 11px; color: var(--muted); font-weight: 700;
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  grid-column: 1/-1;
+  text-align: center; padding: 80px 20px;
+  color: var(--muted);
+}
+.empty-state h3 { font-size: 22px; color: var(--text); margin-bottom: 8px; }
+.empty-icon { font-size: 64px; margin-bottom: 16px; opacity: 0.5; }
+
+/* ── PLAYER MODAL ── */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+.modal-backdrop.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--card-bg);
+  border-radius: 12px;
+  width: 100%; max-width: 860px;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.9), 0 0 0 1px rgba(0,180,216,0.2);
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.2,0,0,1);
+  scrollbar-width: thin; scrollbar-color: var(--blue) transparent;
+}
+.modal-backdrop.open .modal { transform: scale(1) translateY(0); }
+
+.modal-media { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px 12px 0 0; overflow: hidden; }
+.modal-media iframe, .modal-media video { width: 100%; height: 100%; border: none; display: block; }
+
+.modal-body { padding: 24px 28px 28px; }
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 32px; letter-spacing: 1px;
+  color: var(--white); margin-bottom: 10px;
+}
+.modal-meta {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.modal-desc { color: #b0c4d8; font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+.modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.modal-close {
+  position: absolute; top: 12px; right: 16px;
+  background: rgba(0,0,0,0.5); border: none;
+  color: var(--white); font-size: 20px;
+  width: 36px; height: 36px; border-radius: 50%;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+  z-index: 1;
+}
+.modal-close:hover { background: rgba(255,255,255,0.2); }
+.modal-wrap { position: relative; }
+
+/* ── FORM MODAL ── */
+.form-modal { max-width: 520px; }
+.form-modal .modal-body { padding: 28px; }
+.form-title {
+  font-family: var(--font-display);
+  font-size: 26px; letter-spacing: 1px;
+  color: var(--white); margin-bottom: 20px;
+}
+.form-grid { display: flex; flex-direction: column; gap: 12px; }
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+.form-input, .form-select, .form-textarea {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px; font-weight: 600;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--blue); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-select option { background: #111d2e; }
+.form-note { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-actions { display: flex; gap: 10px; margin-top: 8px; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--surface);
+  border: 1px solid rgba(0,180,216,0.3);
+  color: var(--text);
+  padding: 12px 20px; border-radius: 8px;
+  font-weight: 700; font-size: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  z-index: 999;
+  transition: transform 0.3s;
+  pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .menu-btn { display: flex; }
+  .nav-links { display: none; position: absolute; top: 68px; left: 0; right: 0; background: var(--bg); padding: 12px 4%; flex-direction: column; }
+  .nav-links.open { display: flex; }
+  .nav-right { display: none; }
+  .hero-doraemon { opacity: 0.3; right: 0; height: 70%; }
+  .hero-title { font-size: 52px; }
+  .ep-card { width: 160px; }
+  .modal { max-width: 100%; margin: 8px; }
+  .form-row { grid-template-columns: 1fr; }
+  .search-input { width: 150px; }
+  .search-input:focus { width: 180px; }
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash"><div class="splash-logo">D</div></div>
+
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+  <a class="brand" href="index.html">
+    <div class="brand-d">D</div>
+    GadgetVerse
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="game.html">Adventure Game</a></li>
+    <li><a href="pocket.html">Pocket</a></li>
+    <li><a href="lab.html">Gadget Lab</a></li>
+    <li><a href="episodes.html" class="active">Episodes</a></li>
+    <li><a href="missions.html">Missions</a></li>
+    <li><a href="leaderboard.html">Leaderboard</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-search-icon" onclick="focusSearch()">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</span>
+    <button class="btn btn-primary btn-sm" onclick="openAddModal()">＋ Add Episode</button>
+  </div>
+  <button class="menu-btn" id="menuBtn">☰</button>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <img class="hero-doraemon"
+    src="dg.jpg"
+    alt="" aria-hidden="true"
+    onerror="this.style.display='none'">
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Story Archive</div>
+    <h1 class="hero-title">Doraemon<br><em>Episodes</em></h1>
+    <p class="hero-desc">Dive into stories from the 22nd century. Add your favourite episodes, attach YouTube links or local videos, and browse by gadget or category.</p>
+    <div class="hero-buttons">
+      <button class="btn btn-play" onclick="openAddModal()">▶ Add Episode</button>
+      <button class="btn btn-info" onclick="document.getElementById('toolbar').scrollIntoView({behavior:'smooth'})">ℹ Browse All</button>
+    </div>
+    <div class="hero-meta">
+      <span class="meta-tag"><span id="totalBadge">0</span> Episodes</span>
+      <span class="meta-tag">⭐ Rated 1–5</span>
+      <span class="meta-tag">YouTube &amp; Local</span>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLBAR -->
+<div class="toolbar" id="toolbar">
+  <div class="toolbar-inner">
+    <button class="filter-btn active" data-cat="all">All</button>
+    <button class="filter-btn" data-cat="Adventure">Adventure</button>
+    <button class="filter-btn" data-cat="Comedy">Comedy</button>
+    <button class="filter-btn" data-cat="Lesson">Lesson</button>
+    <button class="filter-btn" data-cat="Classic">Classic</button>
+    <button class="filter-btn" data-cat="Gadget Focus">Gadget Focus</button>
+    <div class="toolbar-sep"></div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search episodes…" type="search">
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<main class="content" id="mainContent"></main>
+
+<!-- PLAYER MODAL -->
+<div class="modal-backdrop" id="playerModal">
+  <div class="modal-wrap">
+    <button class="modal-close" onclick="closePlayer()">✕</button>
+    <div class="modal">
+      <div class="modal-media" id="playerMedia"></div>
+      <div class="modal-body">
+        <div class="modal-title" id="playerTitle"></div>
+        <div class="modal-meta" id="playerMeta"></div>
+        <div class="modal-desc" id="playerDesc"></div>
+        <div class="modal-actions" id="playerActions"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM MODAL -->
+<div class="modal-backdrop" id="formModal">
+  <div class="modal-wrap">
+    <div class="modal form-modal">
+      <button class="modal-close" onclick="closeForm()">✕</button>
+      <div class="modal-body">
+        <div class="form-title" id="formTitle">Add Episode</div>
+        <form id="epForm" class="form-grid" onsubmit="saveEpisode(event)">
+          <input type="hidden" id="epId">
+          <div class="form-group">
+            <label class="form-label">Episode Title *</label>
+            <input class="form-input" id="epTitle" placeholder="e.g. Doraemon Comes Home" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select class="form-select" id="epCategory">
+                <option>Adventure</option><option>Comedy</option>
+                <option>Lesson</option><option>Classic</option>
+                <option>Gadget Focus</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Rating (1–5)</label>
+              <input class="form-input" id="epRating" type="number" min="1" max="5" value="4">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Main Gadget (optional)</label>
+            <input class="form-input" id="epGadget" placeholder="e.g. Anywhere Door">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Video Source</label>
+            <select class="form-select" id="epSourceType" onchange="toggleSource()">
+              <option value="youtube">YouTube Link</option>
+              <option value="local">Local Video File</option>
+            </select>
+          </div>
+          <div class="form-group" id="ytWrap">
+            <label class="form-label">YouTube URL</label>
+            <input class="form-input" id="epYoutube" placeholder="https://youtube.com/watch?v=...">
+          </div>
+          <div class="form-group" id="fileWrap" style="display:none">
+            <label class="form-label">Video File</label>
+            <input class="form-input" id="epFile" type="file" accept="video/*">
+            <span class="form-note">Short clips work best — large files may exceed browser storage limits.</span>
+          </div>
+          <div class="form-group">
+           <label class="form-label">Summary / Lesson</label>
+            <textarea class="form-textarea" id="epDesc" placeholder="What happens in this episode?"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Episode</button>
+            <button type="button" class="btn btn-ghost" onclick="closeForm()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<footer style="text-align:center;padding:40px 4%;color:var(--muted);font-size:12px;font-weight:700;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px;">
+  Fan-made educational project — not affiliated with Fujiko Pro or TV Asahi
+</footer>
+
+<script>
+/* ── STORAGE SHIM (works standalone; replaced by storage.js in full project) ── */
+const Store = {
+  _key: 'dg_episodes_v2',
+  episodes(){ try{ return JSON.parse(localStorage.getItem(this._key)||'[]'); }catch(e){ return []; } },
+  saveEpisodes(data){ localStorage.setItem(this._key, JSON.stringify(data)); }
+};
+
+/* ── UTILS ── */
+function esc(t){ return String(t||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function ytId(url){ const m=String(url||'').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{6,})/); return m?m[1]:''; }
+function ytThumb(url){ const id=ytId(url); return id?`https://img.youtube.com/vi/${id}/hqdefault.jpg`:''; }
+function ytEmbed(url){ const id=ytId(url); return id?`https://www.youtube.com/embed/${id}?autoplay=1`:''; }
+function stars(r){ return '★'.repeat(Math.max(0,Number(r)||0))+'☆'.repeat(Math.max(0,5-(Number(r)||0))); }
+function catClass(cat){ return 'cat-'+(cat||'').split(' ')[0]; }
+
+function toast(msg, dur=2800){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'), dur);
+}
+
+/* ── STATE ── */
+let filterCat = 'all';
+let filterSearch = '';
+
+/* ── PARTICLES ── */
+(function spawnParticles(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<18;i++){
+    const s=document.createElement('span');
+    s.style.cssText=`left:${Math.random()*100}%;--dur:${4+Math.random()*6}s;--delay:${Math.random()*6}s;--drift:${(Math.random()-0.5)*80}px;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px;opacity:0;`;
+    c.appendChild(s);
+  }
+})();
+
+/* ── NAVBAR SCROLL ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY>10);
+});
+document.getElementById('menuBtn').onclick=()=>{
+  document.getElementById('navLinks').classList.toggle('open');
+};
+
+/* ── FILTER / SEARCH ── */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    filterCat = btn.dataset.cat;
+    render();
+  });
+});
+document.getElementById('searchInput').addEventListener('input',e=>{
+  filterSearch = e.target.value.toLowerCase();
+  render();
+});
+function focusSearch(){ document.getElementById('searchInput').focus(); }
+
+/* ── CARD HTML ── */
+function cardHTML(ep, inRow=true){
+  const thumb = ep.sourceType==='youtube'&&ep.youtubeUrl ? `<img src="${ytThumb(ep.youtubeUrl)}" alt="" loading="lazy" onerror="this.parentNode.innerHTML='<div class=thumb-placeholder><div class=tp-icon>📺</div><span>No Preview</span></div>'">` :
+    ep.sourceType==='local'&&ep.videoData ? `<video src="${ep.videoData}" muted preload="metadata"></video>` :
+    `<div class="thumb-placeholder"><div class="tp-icon">📺</div><span>No Preview</span></div>`;
+  const rPct = ((Number(ep.rating)||0)/5*100).toFixed(0);
+  const cc = catClass(ep.category);
+  return `
+<div class="ep-card" onclick="openPlayer(${ep.id})">
+  <div class="card-thumb">
+    ${thumb}
+    <div class="card-rating-bar"><div class="card-rating-fill" style="width:${rPct}%"></div></div>
+  </div>
+  <div class="card-hover-info">
+    <div class="hover-actions" onclick="event.stopPropagation()">
+      <button class="ha-btn play" onclick="openPlayer(${ep.id})">▶</button>
+      <button class="ha-btn" title="Edit" onclick="editEpisode(${ep.id})">✏️</button>
+      <button class="ha-btn" title="Delete" onclick="deleteEp(${ep.id})">🗑</button>
+    </div>
+    <div class="hover-title">${esc(ep.title)}</div>
+    <div class="hover-meta">
+      <span class="cat-badge ${cc}">${esc(ep.category)}</span>
+      <span class="stars-mini">${stars(ep.rating)}</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-title">${esc(ep.title)}</div>
+    ${ep.gadget ? `<div class="card-sub">${esc(ep.gadget)}</div>` : ``}
+  </div>
+</div>`;
+}
+
+/* ── RENDER ── */
+function getFiltered(){
+  return Store.episodes().filter(ep=>{
+    const txt=`${ep.title} ${ep.gadget} ${ep.description}`.toLowerCase();
+    const catOk = filterCat==='all' || ep.category===filterCat;
+    const qOk = !filterSearch || txt.includes(filterSearch);
+    return catOk && qOk;
+  });
+}
+
+function render(){
+  const eps = getFiltered();
+  const total = Store.episodes().length;
+  document.getElementById('totalBadge').textContent = total;
+  const main = document.getElementById('mainContent');
+
+  /* Filtered / search view — grid */
+  if(filterCat!=='all' || filterSearch){
+    main.innerHTML = `
+      <div style="margin:32px 0 16px;display:flex;align-items:center;gap:12px;">
+        <span class="section-title">${filterCat==='all'?'Search Results':esc(filterCat)}</span>
+        <span class="section-count">${eps.length} episode${eps.length!==1?'s':''}</span>
+      </div>
+      <div class="eps-grid" id="epsGrid">
+        ${eps.length ? eps.map(ep=>cardHTML(ep,false)).join('') : `<div class="empty-state"><div class="empty-icon">🔍</div><h3>No Episodes Found</h3><p>Try a different filter or search term.</p></div>`}
+      </div>`;
+    return;
+  }
+
+  /* Default — rows by category */
+  const cats = ['Adventure','Comedy','Lesson','Classic','Gadget Focus'];
+  const bycat = {};
+  cats.forEach(c=>{ bycat[c]=[]; });
+  Store.episodes().forEach(ep=>{ if(bycat[ep.category]) bycat[ep.category].push(ep); else bycat['Adventure'].push(ep); });
+
+  let html = '';
+  cats.forEach(cat=>{
+    const catEps = bycat[cat];
+    if(!catEps.length) return;
+    const rowId = 'row_'+cat.replace(' ','_');
+    html += `
+<div class="row-section">
+  <div class="section-header">
+    <span class="section-title">${cat}</span>
+    <span class="section-count">${catEps.length}</span>
+    <button class="see-all" onclick="filterTo('${cat}')">See All ›</button>
+  </div>
+  <div class="card-row-wrap">
+    <button class="row-arrow left" onclick="scrollRow('${rowId}',-1)">‹</button>
+    <div class="card-row" id="${rowId}">
+      ${catEps.map(ep=>cardHTML(ep)).join('')}
+    </div>
+    <button class="row-arrow right" onclick="scrollRow('${rowId}',1)">›</button>
+  </div>
+</div>`;
+  });
+
+  if(!html){
+    html = `<div class="empty-state" style="text-align:center;padding:100px 0;">
+      <div class="empty-icon">🎬</div>
+      <h3>No Episodes Yet</h3>
+      <p style="margin:8px 0 24px;color:var(--muted);">Start building your Doraemon archive.</p>
+      <button class="btn btn-primary" onclick="openAddModal()">＋ Add First Episode</button>
+    </div>`;
+  }
+
+  main.innerHTML = html;
+}
+
+function scrollRow(id, dir){
+  const el = document.getElementById(id);
+  if(el) el.scrollBy({ left: dir*440, behavior:'smooth' });
+}
+function filterTo(cat){
+  document.querySelectorAll('.filter-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.cat===cat);
+  });
+  filterCat = cat;
+  render();
+  document.getElementById('toolbar').scrollIntoView({behavior:'smooth'});
+}
+
+/* ── PLAYER ── */
+function openPlayer(id){
+  const ep = Store.episodes().find(e=>e.id===id);
+  if(!ep) return;
+
+  let mediaHtml = '';
+  if(ep.sourceType==='youtube'&&ep.youtubeUrl){
+    const embed=ytEmbed(ep.youtubeUrl);
+    mediaHtml = embed ? `<iframe src="${embed}" allowfullscreen></iframe>` : `<div class="thumb-placeholder"><div class="tp-icon">🔗</div><a href="${esc(ep.youtubeUrl)}" target="_blank" class="btn btn-ghost" style="margin-top:8px;">Open on YouTube ↗</a></div>`;
+  } else if(ep.sourceType==='local'&&ep.videoData){
+    mediaHtml = `<video controls src="${ep.videoData}"></video>`;
+  } else {
+    mediaHtml = `<div class="thumb-placeholder" style="height:100%"><div class="tp-icon">📺</div><span>No video attached</span></div>`;
+  }
+
+  document.getElementById('playerMedia').innerHTML = mediaHtml;
+  document.getElementById('playerTitle').textContent = ep.title;
+  document.getElementById('playerMeta').innerHTML = `
+    <span class="cat-badge ${catClass(ep.category)}">${esc(ep.category)}</span>
+    <span class="cat-badge" style="background:rgba(255,214,10,0.15);color:var(--yellow);border:1px solid rgba(255,214,10,0.3)">${stars(ep.rating)}</span>
+    ${ep.gadget?`<span class="cat-badge" style="background:rgba(0,180,216,0.1);color:var(--blue);border:1px solid rgba(0,180,216,0.2)">🔧 ${esc(ep.gadget)}</span>`:''}
+    <span class="cat-badge" style="background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.1)">${ep.sourceType==='local'?'📁 Local':'▶ YouTube'}</span>`;
+  document.getElementById('playerDesc').textContent = ep.description || '';
+  document.getElementById('playerActions').innerHTML = `
+    <button class="btn btn-ghost btn-sm" onclick="closePlayer();editEpisode(${id})">✏️ Edit</button>
+    <button class="btn btn-danger btn-sm" onclick="closePlayer();deleteEp(${id})">🗑 Delete</button>`;
+
+  document.getElementById('playerModal').classList.add('open');
+}
+
+function closePlayer(){
+  document.getElementById('playerModal').classList.remove('open');
+  setTimeout(()=>{ document.getElementById('playerMedia').innerHTML=''; }, 300);
+}
+
+/* ── FORM MODAL ── */
+function openAddModal(){
+  resetForm();
+  document.getElementById('formTitle').textContent = 'Add Episode';
+  document.getElementById('formModal').classList.add('open');
+}
+function closeForm(){
+  document.getElementById('formModal').classList.remove('open');
+}
+function resetForm(){
+  document.getElementById('epForm').reset();
+  document.getElementById('epId').value='';
+  document.getElementById('epRating').value=4;
+  document.getElementById('epSourceType').value='youtube';
+  toggleSource();
+}
+function toggleSource(){
+  const local=document.getElementById('epSourceType').value==='local';
+  document.getElementById('ytWrap').style.display=local?'none':'flex';
+  document.getElementById('fileWrap').style.display=local?'flex':'none';
+}
+
+function editEpisode(id){
+  const ep=Store.episodes().find(e=>e.id===id);
+  if(!ep) return;
+  document.getElementById('epId').value=ep.id;
+  document.getElementById('epTitle').value=ep.title||'';
+  document.getElementById('epCategory').value=ep.category||'Adventure';
+  document.getElementById('epGadget').value=ep.gadget||'';
+  document.getElementById('epRating').value=ep.rating||4;
+  document.getElementById('epSourceType').value=ep.sourceType||'youtube';
+  document.getElementById('epYoutube').value=ep.youtubeUrl||'';
+  document.getElementById('epDesc').value=ep.description||'';
+  document.getElementById('formTitle').textContent='Edit Episode';
+  toggleSource();
+  document.getElementById('formModal').classList.add('open');
+}
+
+function deleteEp(id){
+  if(!confirm('Delete this episode?')) return;
+  Store.saveEpisodes(Store.episodes().filter(e=>e.id!==id));
+  render(); toast('Episode deleted.');
+}
+
+function readFile(file){ return new Promise((res,rej)=>{ if(!file) return res(''); const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); }); }
+
+async function saveEpisode(e){
+  e.preventDefault();
+  const id=document.getElementById('epId').value;
+  const episodes=Store.episodes();
+  const existing=id?episodes.find(ep=>ep.id===Number(id)):null;
+  let videoData=existing?.videoData||'', fileName=existing?.fileName||'';
+  const srcType=document.getElementById('epSourceType').value;
+  const fileEl=document.getElementById('epFile');
+  if(srcType==='local'&&fileEl.files[0]){ videoData=await readFile(fileEl.files[0]); fileName=fileEl.files[0].name; }
+  const data={
+    id: id?Number(id):Date.now(),
+    title: document.getElementById('epTitle').value.trim(),
+    category: document.getElementById('epCategory').value,
+    gadget: document.getElementById('epGadget').value.trim(),
+    rating: Number(document.getElementById('epRating').value),
+    description: document.getElementById('epDesc').value.trim(),
+    sourceType: srcType,
+    youtubeUrl: srcType==='youtube'?document.getElementById('epYoutube').value.trim():'',
+    videoData: srcType==='local'?videoData:'',
+    fileName: srcType==='local'?fileName:''
+  };
+  if(id) Store.saveEpisodes(episodes.map(ep=>ep.id===Number(id)?data:ep));
+  else Store.saveEpisodes([data,...episodes]);
+  closeForm(); render();
+  toast(id?'Episode updated!':'Episode added!');
+}
+
+/* ── CLOSE ON BACKDROP ── */
+document.getElementById('playerModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closePlayer(); });
+document.getElementById('formModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeForm(); });
+
+/* ── ESC KEY ── */
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closePlayer(); closeForm(); } });
+
+/* ── INIT ── */
+toggleSource();
+render();
+
+
+</script>
+</body>
+</html>

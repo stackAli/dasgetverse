@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gadget Lab | Doraemon GadgetVerse</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <a class="brand" href="index.html"
+        ><span class="brand-badge">🔵</span><span>Doraemon GadgetVerse</span></a
+      ><button class="menu-btn" id="menuBtn">☰</button>
+      <nav id="navLinks">
+        <a href="index.html">Home</a><a href="game.html">Adventure Game</a
+        ><a href="pocket.html">Pocket</a><a href="lab.html">Gadget Lab</a
+        ><a href="episodes.html">Episodes</a><a href="missions.html">Missions</a
+        ><a href="leaderboard.html">Leaderboard</a>
+      </nav>
+    </header>
+    <main>
+      <section class="page-hero compact">
+        <span class="pill">Gadget Lab</span>
+        <h1>Create custom working gadgets</h1>
+        <p>
+          Describe what the gadget should do. The Adventure Game will detect the
+          effect and apply it when the gadget is used.
+        </p>
+      </section>
+      <section class="form-panel">
+        <h2>Create a Gadget</h2>
+        <form id="gadgetForm" class="pro-form">
+          <input id="gadgetName" placeholder="Gadget name" required /><select
+            id="gadgetType"
+          >
+            <option value="auto">Auto-detect from description</option>
+            <option value="teleport">Teleport / jump forward</option>
+            <option value="fly">Fly</option>
+            <option value="shrink">Shrink</option>
+            <option value="grow">Grow / smash obstacles</option>
+            <option value="slow">Slow time</option>
+            <option value="blast">Blast obstacle</option>
+            <option value="invisible">Invisible / shield</option>
+            <option value="magnet">Magnet comics</option>
+            <option value="heal">Heal / extra life</option>
+            <option value="freeze">Freeze enemies</option>
+            <option value="bonus">Bonus score</option></select
+          ><select id="gadgetRarity">
+            <option>Common</option>
+            <option>Rare</option>
+            <option>Epic</option>
+            <option>Legendary</option></select
+          ><input
+            id="gadgetUses"
+            type="number"
+            min="1"
+            max="9"
+            value="3"
+          /><textarea
+            id="gadgetDesc"
+            placeholder="Example: This gadget attracts all comics and gives Nobita one extra life."
+            required
+          ></textarea>
+          <div class="effect-preview" id="effectPreview">
+            Effect preview will appear here.
+          </div>
+          <button class="btn primary" type="submit">
+            Save Working Gadget to Pocket
+          </button>
+        </form>
+      </section>
+      <section class="section-head">
+        <span class="pill">Quick add</span>
+        <h2>Classic Doraemon gadget ideas</h2>
+      </section>
+      <section class="card-grid" id="suggestionList"></section>
+    </main>
+    <footer>
+      <p>
+        Fan-made educational project for learning HTML, CSS, JavaScript,
+        localStorage, and canvas game development.
+      </p>
+    </footer>
+    <script src="js/storage.js"></script>
+    <script src="js/three-scene.js"></script>
+    <script src="js/gadgets.js"></script>
+    <script src="js/lab.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

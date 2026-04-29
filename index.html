@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doraemon GadgetVerse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .dora-ring-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, #00AEEF22, #FFD70011);
+      border: 1px solid rgba(0,174,239,0.3);
+      border-radius: 999px; padding: 7px 16px;
+      font-family: 'Fredoka One', sans-serif; font-size: 13px;
+      color: #00AEEF; letter-spacing: 0.05em;
+    }
+    .hero-copy h1 { line-height: 1.0; }
+    .hero-feature-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+    .hero-feature-pills span {
+      background: rgba(0,174,239,0.08);
+      border: 1px solid rgba(0,174,239,0.22);
+      border-radius: 8px; padding: 7px 14px;
+      font-weight: 700; font-size: 12px; color: #9DCEF5;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .hero-feature-pills span b { color: #00AEEF; }
+
+    /* Doraemon blue accent text */
+    .t-blue { color: #00AEEF; text-shadow: 0 0 30px rgba(0,174,239,0.5); }
+    .t-red  { color: #E60012; }
+    .t-gold { color: #FFD700; }
+
+    /* Section with image & content side by side */
+    .doraworld-strip {
+      width: min(1200px,90vw); margin: 0 auto 20px;
+    }
+
+    /* Floating character cards */
+    .char-img-wrap { position: relative; height: 140px; width: 100%; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
+    .char-img-wrap img { height: 130px; object-fit: contain; filter: drop-shadow(0 8px 18px rgba(0,0,0,0.4)); }
+
+    /* Gadget section icon */
+    .gad-icon-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, rgba(0,174,239,0.25), rgba(0,77,153,0.15));
+      border: 2px solid rgba(0,174,239,0.35);
+      display: grid; place-items: center; font-size: 30px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 20px rgba(0,174,239,0.2);
+    }
+
+    /* Doraemon image in hero */
+    .hero-dora-img {
+      position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; z-index: 2;
+    }
+    .hero-dora-img img {
+      max-height: 400px; object-fit: contain;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+      margin-bottom: 30px;
+    }
+
+    /* Stats strip */
+    .stat-num { font-family: 'Fredoka One', sans-serif; font-size: 48px; color: #00AEEF; text-shadow: 0 0 25px rgba(0,174,239,0.4); }
+    .stat-lbl { margin-top: 4px; color: #7BB8E8; font-weight: 700; font-size: 13px; }
+
+    /* CTA big bg image */
+    .cta-bg-char {
+      position: absolute; right: 20px; bottom: 0; height: 120px;
+      object-fit: contain; opacity: 0.18; pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <a class="brand" href="index.html">
+    <span class="brand-badge">🔵</span>
+    <span>Doraemon GadgetVerse</span>
+  </a>
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <nav id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="game.html">Adventure Game</a>
+    <a href="pocket.html">Pocket</a>
+    <a href="lab.html">Gadget Lab</a>
+    <a href="episodes.html">Episodes</a>
+    <a href="missions.html">Missions</a>
+    <a href="leaderboard.html">Leaderboard</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ── HERO ── -->
+  <section class="pro-hero">
+    <div class="hero-copy">
+      <span class="dora-ring-badge">🔵 Fan-made Doraemon experience</span>
+      <h1>
+        Explore <span class="t-blue">Doraemon's</span><br>
+        Futuristic<br>
+        <span class="t-gold">GadgetVerse</span>
+      </h1>
+      <p>Stories, gadgets, characters, and a Nobita adventure game — all in one interactive universe. Powered by love for the blue robot cat from the 22nd century.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="game.html">▶ Play Nobita's Game</a>
+        <a class="btn ghost"   href="#world">Explore World</a>
+      </div>
+      <div class="hero-feature-pills">
+        <span><b>Double Jump</b></span>
+        <span><b>Gadget Powers</b></span>
+        <span><b>Leaderboard</b></span>
+        <span><b>Episodes</b></span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="image-card">
+        <div class="hero-dora-img">
+          <img
+            src="dg.jpg"
+            alt="Doraemon"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/en/b/b2/Doraemon_character.png'; this.onerror=null;">
+        </div>
+        <div class="glass-caption">
+          <strong>🔵 Doraemon &amp; Friends</strong>
+          <span>22nd century gadgets · Future adventures</span>
+        </div>
+      </div>
+      <div class="hero-float-badge">22nd Century Robot Cat</div>
+    </div>
+  </section>
+
+  <!-- ── STATS STRIP ── -->
+  <section class="dashboard-strip">
+    <article>
+      <div class="stat-num">22nd</div>
+      <div class="stat-lbl">Century origin</div>
+    </article>
+    <article>
+      <div class="stat-num">4D</div>
+      <div class="stat-lbl">Magic pocket</div>
+    </article>
+    <article>
+      <div class="stat-num">8+</div>
+      <div class="stat-lbl">Interactive modules</div>
+    </article>
+    <article>
+      <div class="stat-num" id="statBest">0</div>
+      <div class="stat-lbl">Your best score</div>
+    </article>
+  </section>
+
+  <!-- ── ABOUT SECTION ── -->
+  <section class="section-head" id="world">
+    <span class="pill">Doraemon Universe</span>
+    <h2>More than a cartoon</h2>
+    <p>Doraemon is a robotic cat from the 22nd century, sent to help Nobita Nobi navigate life using incredible gadgets from his four-dimensional pocket.</p>
+  </section>
+
+  <section class="split-panel doraworld-strip">
+    <div>
+      <h2>What makes the story <span class="t-blue">timeless?</span></h2>
+      <p>The Doraemon universe blends heartwarming comedy with meaningful life lessons. Every gadget comes with a twist — usually teaching responsibility, friendship, honesty, or self-reliance.</p>
+      <ul class="check-list">
+        <li>Rich character cards with real Doraemon-style visuals</li>
+        <li>Connected pocket, missions, leaderboard, and game progress</li>
+        <li>Interactive adventure game with gadget power-ups</li>
+        <li>Netflix-style episode browser with categories</li>
+      </ul>
+    </div>
+    <div class="info-stack">
+      <div><b> Doraemon</b><span>A helper from the 22nd century who guides Nobita with futuristic gadgets.</span></div>
+      <div><b>Nobita</b><span>Kind-hearted and emotional; lazy at times but always capable of growth.</span></div>
+      <div><b>Gadgets</b><span>Creative tools from the 4D pocket that solve problems — but often create funny consequences.</span></div>
+    </div>
+  </section>
+
+  <!-- ── GADGETS ── -->
+  <section class="section-head">
+    <span class="pill">Famous Gadgets</span>
+    <h2>Tools that define the series</h2>
+    <p>Each gadget has a purpose, a funny risk, and a valuable lesson attached to it.</p>
+  </section>
+
+  <section class="feature-grid doraworld-strip">
+    <article class="feature-card">
+      <div class="gad-icon-circle">🚪</div>
+      <h3>Anywhere Door</h3>
+      <p>Opens a route to almost any place. In the game it works as a teleport boost away from danger.</p>
+    </article>
+    <article class="feature-card">
+      <div class="gad-icon-circle">🚁</div>
+      <h3>Bamboo Copter</h3>
+      <p>A small flying propeller. Helps Nobita soar above obstacles and collect comics mid-air.</p>
+    </article>
+    <article class="feature-card">
+      <div class="gad-icon-circle">🔦</div>
+      <h3>Small Light</h3>
+      <p>Shrinks objects or people. In gameplay, Nobita becomes harder to hit by enemies.</p>
+    </article>
+    <article class="feature-card">
+      <div class="gad-icon-circle">⏳</div>
+      <h3>Time Machine</h3>
+      <p>Travels through time. In gameplay it slows down all enemies and obstacles around Nobita.</p>
+    </article>
+  </section>
+
+  <!-- ── CHARACTERS ── -->
+  <section class="section-head">
+    <span class="pill">Main Characters</span>
+    <h2>Characters with clear roles</h2>
+  </section>
+
+  <section class="character-grid doraworld-strip">
+    <article>
+      
+        <img src="doraemon.png"
+             alt="Doraemon"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+        <div class="avatar-fallback" style="display:none; background: linear-gradient(135deg,#00AEEF33,#004D9922);">🔵</div>
+   
+      <h3>Doraemon</h3>
+      <p>The loyal robotic cat who wants Nobita to become more responsible and self-sufficient.</p>
+    </article>
+    <article>
+      
+        <img src="nobita.png"
+             alt="Nobita"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+        <div class="avatar-fallback" style="display:none;">👦</div>
+    
+      <h3>Nobita Nobi</h3>
+      <p>Kind-hearted, emotional, lazy at times, but always capable of real growth when it matters.</p>
+    </article>
+    <article>
+      <img src="shizuka.png" alt="">
+      <h3>Shizuka Minamoto</h3>
+      <p>Gentle, sincere, and often the moral compass of the group. Nobita's biggest inspiration.</p>
+    </article>
+    <article>
+      <img src="gian.png" alt="">
+      <h3>Takeshi (Gian)</h3>
+      <p>Strong, loud, and intimidating — but fiercely protective of his friends when it counts.</p>
+    </article>
+    <article>
+      <img src="sunio.png" alt="">
+      <h3>Suneo Honekawa</h3>
+      <p>Stylish, clever, and often used for comedy through boasting. Secretly admires Nobita.</p>
+    </article>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-panel doraworld-strip">
+    <div>
+      <span class="pill">🎮 Improved Game</span>
+      <h2>Play as Nobita and rescue lost comics!</h2>
+      <p>The game features double jump, gadget power-ups with timers, combo multipliers, level progression, smoother controls, and a polished pause system with Doraemon's pocket.</p>
+    </div>
+    <a class="btn primary" href="game.html">▶ Start Game</a>
+  </section>
+
+</main>
+
+<footer>
+  <p>🔵 Fan-made educational project. Character images belong to their respective rights holders and are used only for academic presentation.</p>
+</footer>
+
+<script src="js/storage.js"></script>
+<script src="js/three-scene.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adventure Game | Doraemon GadgetVerse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/game.css">
+  <style>
+    .game-hero { padding-bottom: 0; }
+    .game-hero h1 { color: #fff; }
+    .game-hero h1 span { color: #00AEEF; }
+    .game-page-wrap { width: min(1140px, 94vw); margin-inline: auto; }
+
+    /* HUD pocket button */
+    .game-hud > button {
+      background: linear-gradient(135deg, #00AEEF, #004D99);
+      color: #fff; border: none; border-radius: 14px;
+      padding: 0 16px; cursor: pointer; font-weight: 800;
+      font-size: 13px; font-family: 'Nunito', sans-serif;
+      transition: box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 4px 16px rgba(0,174,239,0.3);
+    }
+    .game-hud > button:hover {
+      box-shadow: 0 6px 22px rgba(0,174,239,0.5);
+      transform: translateY(-2px);
+    }
+
+    /* Controls legend */
+    .controls-strip {
+      display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+    }
+    .controls-strip .sep { color: rgba(255,255,255,0.2); }
+
+    /* Double jump badge */
+    .dj-badge {
+      background: rgba(255,215,0,0.12);
+      border: 1px solid rgba(255,215,0,0.3);
+      border-radius: 6px; padding: 4px 10px;
+      color: #FFD700; font-size: 12px; font-weight: 800;
+    }
+
+    /* Doraemon pocket widget in HUD */
+    .hud-pocket-deco {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2px;
+    }
+    .hud-pocket-deco img {
+      width: 32px; height: 32px; object-fit: contain;
+    }
+  </style>
+</head>
+<body class="game-page">
+
+<header class="navbar">
+  <a class="brand" href="index.html">
+    <span class="brand-badge">🔵</span>
+    <span>Doraemon GadgetVerse</span>
+  </a>
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <nav id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="game.html">Adventure Game</a>
+    <a href="pocket.html">Pocket</a>
+    <a href="lab.html">Gadget Lab</a>
+    <a href="episodes.html">Episodes</a>
+    <a href="missions.html">Missions</a>
+    <a href="leaderboard.html">Leaderboard</a>
+  </nav>
+</header>
+
+<main>
+  <section class="page-hero compact game-hero game-page-wrap">
+    <span class="pill">🎮 Double Jump · Gadget Powers · Level Progression</span>
+    <h1>Nobita's <span>Rescue Mission</span></h1>
+    <p>Move Nobita, collect comics, avoid Gian &amp; exams, double-jump over obstacles, and activate Doraemon gadgets from the 4D pocket for powerful boosts.</p>
+  </section>
+
+  <!-- ── GAME CONTAINER — NO TILT, NO ANIMATION ON THIS ELEMENT ── -->
+  <section class="game-wrap game-page-wrap">
+
+    <!-- HUD -->
+    <div class="game-hud">
+      <div>
+        <span>Score</span>
+        <strong id="score">0</strong>
+      </div>
+      <div>
+        <span>Comics</span>
+        <strong id="comics">0</strong>
+      </div>
+      <div>
+        <span>Lives</span>
+        <strong id="lives">3</strong>
+      </div>
+      <div>
+        <span>Power</span>
+        <strong id="power">None</strong>
+        <div class="power-timer-bar">
+          <div class="power-timer-fill" id="powerTimerFill" style="width:0%"></div>
+        </div>
+      </div>
+      <button id="openPocket">Open Pocket <span style="opacity:.5;font-size:11px">[P]</span></button>
+    </div>
+
+    <!-- Status bar -->
+    <div class="game-status-bar">
+      <span class="game-status-pill">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="gameStateLabel">Menu</span>
+      </span>
+      <div class="controls-strip">
+        <span class="game-status-pill">
+          <span class="keycap">A</span><span class="keycap">D</span> or <span class="keycap">←</span><span class="keycap">→</span>
+          &nbsp;Move
+        </span>
+        <span class="game-status-pill">
+          <span class="keycap">Space</span> Jump (×2!)
+        </span>
+        <span class="game-status-pill">
+          <span class="keycap">P</span> Pocket
+        </span>
+        <span class="dj-badge">✨ Double Jump!</span>
+      </div>
+    </div>
+
+    <!-- Canvas -->
+    <canvas id="gameCanvas" width="1100" height="530"></canvas>
+
+    <!-- Touch controls (mobile) -->
+    <div class="touch-controls">
+      <button class="touch-btn" id="touchLeft">◀</button>
+      <button class="touch-btn jump-btn" id="touchJump">▲ Jump</button>
+      <button class="touch-btn" id="touchRight">▶</button>
+      <button class="touch-btn" id="touchPocket">🎒</button>
+    </div>
+
+    <!-- Action row -->
+    <div class="game-actions">
+      <!-- Fullscreen btn injected by three-scene.js -->
+      <button class="btn primary" id="startGame">▶ Start / Restart</button>
+      <span style="font-size:13px; color:#7BB8E8; font-weight:700;">
+        💡 Tip: Collect gadgets mid-game to power up!
+      </span>
+    </div>
+
+  </section>
+</main>
+
+<!-- Pocket Modal -->
+<div class="modal-backdrop hidden" id="pocketModal">
+  <div class="modal">
+    <button class="modal-close" id="closePocket">×</button>
+    <span class="pill">🎒 Use in game</span>
+    <h2 style="font-family:'Fredoka One',sans-serif; margin:12px 0 6px; color:#fff;">Doraemon's Pocket</h2>
+    <p class="muted" style="margin-bottom:16px;">Click a gadget to activate it. Uses reduce automatically.</p>
+    <div class="card-grid small" id="gamePocketGrid"></div>
+  </div>
+</div>
+
+<footer>
+  <p>🔵 Fan-made educational project. Nobita image sprite uses online image asset with canvas fallback.</p>
+</footer>
+
+<script>window.NOBITA_SPRITE='https://www.pngitem.com/pimgs/m/204-2047786_doraemon-png-nobita-transparent-png.png';</script>
+<script src="js/storage.js"></script>
+<script src="js/three-scene.js"></script>
+<script src="js/gadgets.js"></script>
+<script src="js/game.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

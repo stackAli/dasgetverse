@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Missions | Doraemon GadgetVerse</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <a class="brand" href="index.html"
+        ><span class="brand-badge">🔵</span><span>Doraemon GadgetVerse</span></a
+      ><button class="menu-btn" id="menuBtn">☰</button>
+      <nav id="navLinks">
+        <a href="index.html">Home</a><a href="game.html">Adventure Game</a
+        ><a href="pocket.html">Pocket</a><a href="lab.html">Gadget Lab</a
+        ><a href="episodes.html">Episodes</a><a href="missions.html">Missions</a
+        ><a href="leaderboard.html">Leaderboard</a>
+      </nav>
+    </header>
+    <main>
+      <section class="page-hero compact">
+        <span class="pill">Missions</span>
+        <h1>Track progress</h1>
+        <p>Complete objectives across the game, pocket, and leaderboard.</p>
+      </section>
+      <section class="form-panel">
+        <h2>Add Mission</h2>
+        <form id="missionForm" class="pro-form">
+          <input
+            id="missionTitle"
+            placeholder="Mission title"
+            required
+          /><select id="missionType">
+            <option value="comics">Comics</option>
+            <option value="gadgets">Gadgets</option>
+            <option value="uses">Uses</option>
+            <option value="score">Score</option></select
+          ><input id="missionTarget" type="number" min="1" value="5" /><button
+            class="btn primary"
+            type="submit"
+          >
+            Add Mission
+          </button>
+        </form>
+      </section>
+      <section class="toolbar">
+        <button class="btn ghost" id="resetMissions">
+          Reset Default Missions</button
+        ><button class="btn danger" id="deleteCompleted">
+          Delete Completed
+        </button>
+      </section>
+      <section class="card-grid" id="missionList"></section>
+    </main>
+    <footer>
+      <p>
+        Fan-made educational project for learning HTML, CSS, JavaScript,
+        localStorage, and canvas game development.
+      </p>
+    </footer>
+    <script src="js/storage.js"></script>
+    <script src="js/three-scene.js"></script>
+    <script src="js/missions.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

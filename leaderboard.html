@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard | Doraemon GadgetVerse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Leaderboard specific — NO TILT, NO MOVEMENT ── */
+    .lb-wrap { width: min(900px, 92vw); margin-inline: auto; }
+
+    .lb-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+      /* NO hover transform, NO tilt */
+    }
+    .lb-stat-card {
+      background: rgba(0,80,180,0.12);
+      border: 1px solid rgba(0,174,239,0.25);
+      border-radius: 18px;
+      padding: 26px 22px;
+      text-align: center;
+      /* Stable — no animation */
+    }
+    .lb-stat-num {
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 46px;
+      color: #00AEEF;
+      text-shadow: 0 0 24px rgba(0,174,239,0.4);
+      line-height: 1;
+    }
+    .lb-stat-lbl { margin-top: 6px; color: #7BB8E8; font-weight: 700; font-size: 13px; }
+
+    /* Score panel — stable, no animation */
+    .lb-panel {
+      background: rgba(0,70,160,0.1);
+      border: 2px solid rgba(0,174,239,0.25);
+      border-radius: 24px;
+      padding: 32px;
+      backdrop-filter: blur(14px);
+      margin-bottom: 50px;
+      /* NO transform, NO animation */
+    }
+    .lb-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+    }
+    .lb-header h2 {
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 32px; color: #fff; letter-spacing: 0.03em;
+    }
+
+    /* Table */
+    .lb-table { width: 100%; border-collapse: collapse; }
+    .lb-table thead th {
+      color: #00AEEF; font-weight: 900; font-size: 11px;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 14px 18px; border-bottom: 1px solid rgba(0,174,239,0.2);
+      text-align: left;
+    }
+    .lb-table tbody tr {
+      transition: background 0.18s;
+    }
+    .lb-table tbody tr:hover td { background: rgba(0,174,239,0.06); }
+    .lb-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(0,174,239,0.08);
+      font-size: 14px; color: var(--text);
+    }
+
+    /* Rank badges */
+    .rank-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 50%;
+      font-family: 'Fredoka One', sans-serif; font-size: 14px; font-weight: 700;
+    }
+    .rank-1 { background: linear-gradient(135deg,#FFD700,#FFA000); color: #2a1a00; box-shadow: 0 0 14px rgba(255,215,0,0.5); }
+    .rank-2 { background: linear-gradient(135deg,#C0C0C0,#909090); color: #1a1a1a; }
+    .rank-3 { background: linear-gradient(135deg,#CD7F32,#A0522D); color: #fff; }
+    .rank-n { background: rgba(0,174,239,0.12); color: #7BB8E8; border: 1px solid rgba(0,174,239,0.2); }
+
+    /* Score highlight */
+    .score-val { font-family: 'Fredoka One', sans-serif; font-size: 20px; color: #FFD700; }
+    .comics-val { color: #00AEEF; font-weight: 800; }
+    .date-val { color: #7BB8E8; font-size: 13px; }
+
+    /* Empty state */
+    .lb-empty {
+      text-align: center; padding: 60px 20px;
+      color: #7BB8E8;
+    }
+    .lb-empty .big-emoji { font-size: 64px; display: block; margin-bottom: 16px; opacity: 0.5; }
+    .lb-empty h3 { font-family: 'Fredoka One', sans-serif; font-size: 28px; color: rgba(255,255,255,0.25); margin-bottom: 8px; }
+
+    /* Top 3 podium banner */
+    .podium-row {
+      display: flex; gap: 16px; margin-bottom: 28px; align-items: flex-end; flex-wrap: wrap;
+    }
+    .podium-card {
+      flex: 1; min-width: 160px;
+      background: rgba(0,80,180,0.12);
+      border-radius: 18px; padding: 20px;
+      text-align: center;
+      border: 1px solid rgba(0,174,239,0.18);
+      /* Stable — no tilt, no hover transform */
+    }
+    .podium-card.first {
+      background: linear-gradient(145deg, rgba(255,215,0,0.12), rgba(255,165,0,0.06));
+      border-color: rgba(255,215,0,0.3);
+      order: 2;
+    }
+    .podium-card.second { order: 1; }
+    .podium-card.third  { order: 3; }
+    .podium-trophy { font-size: 40px; display: block; margin-bottom: 8px; }
+    .podium-score { font-family: 'Fredoka One', sans-serif; font-size: 26px; color: #FFD700; }
+    .podium-comics { font-size: 13px; color: #7BB8E8; margin-top: 4px; }
+    .podium-rank { font-size: 13px; font-weight: 800; color: #9DCEF5; margin-bottom: 4px; }
+
+    @media(max-width:640px){
+      .lb-stats { grid-template-columns: repeat(2,1fr); }
+      .podium-row { gap: 10px; }
+      .lb-table td, .lb-table th { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <a class="brand" href="index.html">
+    <span class="brand-badge">🔵</span>
+    <span>Doraemon GadgetVerse</span>
+  </a>
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <nav id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="game.html">Adventure Game</a>
+    <a href="pocket.html">Pocket</a>
+    <a href="lab.html">Gadget Lab</a>
+    <a href="episodes.html">Episodes</a>
+    <a href="missions.html">Missions</a>
+    <a href="leaderboard.html">Leaderboard</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page-hero compact lb-wrap">
+    <span class="pill"> Hall of Fame</span>
+    <h1>Leaderboard</h1>
+    <p>Your top scores from Nobita's Rescue Mission, saved locally in your browser.</p>
+  </section>
+
+  <!-- ── STATS — stable, no tilt ── -->
+  <div class="lb-wrap">
+    <div class="lb-stats">
+      <div class="lb-stat-card">
+        <div class="lb-stat-num" id="bestScore">0</div>
+        <div class="lb-stat-lbl">Best Score</div>
+      </div>
+      <div class="lb-stat-card">
+        <div class="lb-stat-num" id="savedRuns">0</div>
+        <div class="lb-stat-lbl">Saved Runs</div>
+      </div>
+      <div class="lb-stat-card">
+        <div class="lb-stat-num" id="totalComics">0</div>
+        <div class="lb-stat-lbl">Total Comics</div>
+      </div>
+      
+    </div>
+
+    <!-- ── PODIUM (top 3) ── -->
+    <div class="podium-row" id="podiumRow" style="display:none"></div>
+
+    <!-- ── SCORE TABLE — stable, no tilt ── -->
+    <div class="lb-panel">
+      <div class="lb-header">
+        <h2>Top Scores</h2>
+        <button class="btn danger" id="clearScores">🗑 Clear All Scores</button>
+      </div>
+      <div id="tableWrap">
+        <table class="lb-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Score</th>
+              <th>Comics</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="scoreTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-bottom:50px;">
+      <a href="game.html" class="btn primary">Play Again</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>🔵 Fan-made educational project for learning HTML, CSS, JavaScript, localStorage, and canvas game development.</p>
+</footer>
+
+<script src="js/storage.js"></script>
+<script src="js/three-scene.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
